@@ -1,0 +1,147 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Fernando Curti SA — Falegnameria dal 1974{% endblock %}
+
+{% block content %}
+{# ─── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="hero">
+  <div class="hero-bg">
+    <img src="{{ images.hero }}" alt="Falegnameria Fernando Curti" />
+  </div>
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content">
+    <div class="hero-kicker">
+      <span class="hero-kicker-line"></span>
+      <span class="hero-kicker-text">Falegnameria dal 1974</span>
+    </div>
+    
+    <h1 class="hero-title font-display">Artigianato che diventa architettura</h1>
+    
+    <p class="hero-subtitle">
+      Porte, serramenti, cucine e mobili su misura. Da tre generazioni, 
+      trasformiamo il legno in soluzioni che durano nel tempo.
+    </p>
+    
+    <div class="hero-actions">
+      <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Richiedi preventivo</a>
+      <a href="{{ url_for('site.projects') }}" class="btn btn-outline">Scopri i progetti</a>
+    </div>
+    
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-value">50+</span>
+        <span class="hero-stat-label">Anni di esperienza</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">100%</span>
+        <span class="hero-stat-label">Made in Ticino</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">USFA</span>
+        <span class="hero-stat-label">Certificazione</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ─── SERVICES ────────────────────────────────────────────────────────────── #}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-kicker">
+        <span class="section-kicker-line"></span>
+        <span class="section-kicker-text">Cosa facciamo</span>
+      </div>
+      <h2 class="section-title font-display">Soluzioni su misura</h2>
+      <p class="section-subtitle">
+        Ogni progetto nasce dall'ascolto. Progettiamo, produciamo e installiamo 
+        con un unico interlocutore affidabile.
+      </p>
+    </div>
+    
+    {% set service_images = [
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80'
+    ] %}
+    <div class="grid-3">
+      {% for service in services %}
+      <div class="service-card service-card--with-image">
+        <div class="service-image">
+          <img src="{{ service_images[loop.index0] }}" alt="{{ service.title }}" />
+        </div>
+        <div class="service-content">
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-text">{{ service.intro }}</p>
+          <ul class="service-list">
+            {% for bullet in service.bullets %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4">
+      <a href="{{ url_for('site.products') }}" class="btn btn-outline">Tutti i prodotti</a>
+    </div>
+  </div>
+</section>
+
+{# ─── FEATURED PROJECTS ───────────────────────────────────────────────────── #}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-kicker">
+        <span class="section-kicker-line"></span>
+        <span class="section-kicker-text">Portfolio</span>
+      </div>
+      <h2 class="section-title font-display">Progetti recenti</h2>
+      <p class="section-subtitle">
+        Ogni realizzazione racconta una storia di collaborazione tra 
+        committente, progettista e artigiano.
+      </p>
+    </div>
+    
+    <div class="grid-3">
+      {% set project_images = ['cucina', 'portoncino', 'armadio'] %}
+      {% for project in projects %}
+      <div class="card">
+        <div class="card-image">
+          <img src="{{ images.projects[project_images[loop.index0]] }}" alt="{{ project.title }}" />
+        </div>
+        <div class="card-content">
+          <span class="card-tag">{{ project.location }}</span>
+          <h3 class="card-title">{{ project.title }}</h3>
+          <p class="card-text">{{ project.goal }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4">
+      <a href="{{ url_for('site.projects') }}" class="btn btn-outline">Vedi tutti i progetti</a>
+    </div>
+  </div>
+</section>
+
+{# ─── CTA SECTION ─────────────────────────────────────────────────────────── #}
+<section class="section section--dark">
+  <div class="container text-center">
+    <div class="section-kicker" style="justify-content: center;">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Inizia il tuo progetto</span>
+      <span class="section-kicker-line"></span>
+    </div>
+    <h2 class="section-title font-display" style="max-width: 700px; margin: 0 auto 1.5rem;">
+      Parliamo del tuo progetto
+    </h2>
+    <p class="section-subtitle" style="margin: 0 auto 2rem; text-align: center;">
+      Preventivo chiaro, tempi condivisi, posa pulita. Contattaci per una consulenza gratuita.
+    </p>
+    <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Contattaci ora</a>
+  </div>
+</section>
+{% endblock %}

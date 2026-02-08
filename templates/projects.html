@@ -1,0 +1,66 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Fernando Curti SA — Progetti{% endblock %}
+
+{% block content %}
+{# ─── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="projects-hero">
+  <div class="container">
+    <div class="section-kicker">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Portfolio</span>
+    </div>
+    <h1 class="section-title font-display" style="font-size: clamp(2.5rem, 5vw, 4rem); max-width: 700px;">
+      Progetti realizzati
+    </h1>
+    <p class="section-subtitle" style="max-width: 600px;">
+      Una selezione dei nostri lavori. Ogni progetto nasce dalla collaborazione 
+      tra committente, progettista e artigiano.
+    </p>
+  </div>
+</section>
+
+{# ─── PROJECTS LIST ───────────────────────────────────────────────────────── #}
+<section class="section">
+  <div class="container">
+    {% set project_images = ['cucina', 'portoncino', 'armadio'] %}
+    {% for project in projects %}
+    <div class="project-card">
+      <div class="project-image">
+        <img src="{{ images.projects[project_images[loop.index0]] }}" alt="{{ project.title }}" />
+      </div>
+      <div class="project-content">
+        <span class="project-location">{{ project.location }}</span>
+        <h2 class="project-title font-display">{{ project.title }}</h2>
+        <div class="project-details">
+          <div class="project-detail">
+            <div class="project-detail-label">Obiettivo</div>
+            <div class="project-detail-value">{{ project.goal }}</div>
+          </div>
+          <div class="project-detail">
+            <div class="project-detail-label">Soluzione</div>
+            <div class="project-detail-value">{{ project.solution }}</div>
+          </div>
+          <div class="project-detail">
+            <div class="project-detail-label">Materiali</div>
+            <div class="project-detail-value">{{ project.materials }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ─── CTA ─────────────────────────────────────────────────────────────────── #}
+<section class="section section--dark">
+  <div class="container text-center">
+    <h2 class="section-title font-display" style="max-width: 600px; margin: 0 auto 1.5rem;">
+      Il tuo progetto potrebbe essere il prossimo
+    </h2>
+    <p class="section-subtitle" style="margin: 0 auto 2rem; text-align: center;">
+      Raccontaci la tua idea. Ti accompagneremo dalla progettazione alla posa.
+    </p>
+    <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Inizia ora</a>
+  </div>
+</section>
+{% endblock %}

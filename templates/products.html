@@ -1,0 +1,88 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Fernando Curti SA — Prodotti{% endblock %}
+
+{% block content %}
+{# ─── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="products-hero">
+  <div class="container">
+    <div class="section-kicker">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Catalogo</span>
+    </div>
+    <h1 class="section-title font-display" style="font-size: clamp(2.5rem, 5vw, 4rem); max-width: 700px;">
+      Prodotti su misura
+    </h1>
+    <p class="section-subtitle" style="max-width: 600px;">
+      Ogni prodotto è configurabile su specifica. Materiali, finiture e ferramenta 
+      scelti insieme per rispondere alle esigenze di ogni progetto.
+    </p>
+  </div>
+</section>
+
+{# ─── PRODUCTS GRID ───────────────────────────────────────────────────────── #}
+<section class="section">
+  <div class="container">
+    <div class="grid-2">
+      {% for product in products %}
+      <div class="product-card">
+        <div class="product-header">
+          <h3 class="product-title">{{ product.title }}</h3>
+          {% if product.usfa_summary %}
+          <span class="product-badge">USFA</span>
+          {% endif %}
+        </div>
+        <p class="product-text">{{ product.short }}</p>
+        <ul class="product-highlights">
+          {% for highlight in product.highlights %}
+          <li>{{ highlight }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ─── USFA INFO ───────────────────────────────────────────────────────────── #}
+<section class="section section--alt">
+  <div class="container">
+    <div class="about-story">
+      <div class="story-content">
+        <div class="section-kicker">
+          <span class="section-kicker-line"></span>
+          <span class="section-kicker-text">Certificazione</span>
+        </div>
+        <h2 class="font-display" style="font-size: 2rem; margin-bottom: 1.5rem;">Membro USFA</h2>
+        <p class="story-text">
+          Fernando Curti SA è membro dell'Unione Svizzera dei Fabbricanti di Finestre, Facciate e Porte (USFA). 
+          Questo garantisce standard qualitativi elevati e accesso a prodotti certificati.
+        </p>
+        <p class="story-text">
+          La certificazione USFA significa processi controllati, materiali tracciabili e 
+          prestazioni garantite per ogni prodotto.
+        </p>
+        <a href="https://www.usfa.ch/it/prodotti" target="_blank" class="btn btn-outline mt-2">
+          Scopri i prodotti USFA
+        </a>
+      </div>
+      <div class="story-image">
+        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&q=80" alt="Finestre in legno" />
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ─── CTA ─────────────────────────────────────────────────────────────────── #}
+<section class="section section--dark">
+  <div class="container text-center">
+    <h2 class="section-title font-display" style="max-width: 600px; margin: 0 auto 1.5rem;">
+      Hai un progetto in mente?
+    </h2>
+    <p class="section-subtitle" style="margin: 0 auto 2rem; text-align: center;">
+      Contattaci per una consulenza gratuita. Ti aiuteremo a scegliere 
+      i prodotti più adatti alle tue esigenze.
+    </p>
+    <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Richiedi preventivo</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Fernando Curti SA — Immobili{% endblock %}
+
+{% block content %}
+{# ─── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="re-hero">
+  <div class="container">
+    <div class="section-kicker">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Oggetti immobiliari</span>
+    </div>
+    <h1 class="section-title font-display" style="font-size: clamp(2.5rem, 5vw, 4rem); max-width: 700px;">
+      Disponibilità
+    </h1>
+    <p class="section-subtitle" style="max-width: 600px;">
+      Annunci pubblicati sul sito ufficiale. Per disponibilità e visite, 
+      contattare il numero immobiliare.
+    </p>
+    
+    <div class="re-filters">
+      <button class="re-filter re-filter--active" data-filter="vendita">In vendita</button>
+      <button class="re-filter" data-filter="affitto">In affitto</button>
+    </div>
+  </div>
+</section>
+
+{# ─── IN VENDITA ──────────────────────────────────────────────────────────── #}
+{% set vendita = listings | selectattr('listing_type', 'equalto', 'vendita') | list %}
+{% if vendita %}
+<section class="section" id="vendita">
+  <div class="container">
+    <div class="re-section-header">
+      <span class="re-badge re-badge--sale">In vendita</span>
+      <span class="re-count">{{ vendita | length }} oggett{{ 'o' if vendita | length == 1 else 'i' }}</span>
+    </div>
+    
+    {% for listing in vendita %}
+    <div class="re-listing">
+      <div class="re-carousel" data-carousel>
+        <div class="re-carousel-track" data-track>
+          {% for img in listing.images %}
+          <div class="re-carousel-slide">
+            <img src="{{ img }}" alt="{{ listing.title }} – foto {{ loop.index }}" />
+          </div>
+          {% endfor %}
+        </div>
+        {% if listing.images | length > 1 %}
+        <button class="re-carousel-btn re-carousel-btn--prev" data-prev>‹</button>
+        <button class="re-carousel-btn re-carousel-btn--next" data-next>›</button>
+        <div class="re-carousel-dots" data-dots>
+          {% for img in listing.images %}
+          <span class="re-carousel-dot{{ ' active' if loop.first else '' }}" data-dot="{{ loop.index0 }}"></span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      
+      <div class="re-content">
+        <div class="re-header">
+          <span class="re-place">{{ listing.place }}</span>
+          <span class="re-price">CHF {{ "{:,}".format(listing.price_chf).replace(",", "'") }}{{ listing.price_label }}</span>
+        </div>
+        <h3 class="re-title">{{ listing.title }}</h3>
+        <div class="re-specs">{{ listing.rooms }} • {{ listing.floor }}</div>
+        <p class="re-description">{{ listing.description }}</p>
+        <ul class="re-bullets">
+          {% for bullet in listing.bullets %}
+          <li>{{ bullet }}</li>
+          {% endfor %}
+        </ul>
+        <div class="re-cta">
+          <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Richiedi informazioni</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# ─── IN AFFITTO ──────────────────────────────────────────────────────────── #}
+{% set affitto = listings | selectattr('listing_type', 'equalto', 'affitto') | list %}
+{% if affitto %}
+<section class="section section--alt" id="affitto" style="display: none;">
+  <div class="container">
+    <div class="re-section-header">
+      <span class="re-badge re-badge--rent">In affitto</span>
+      <span class="re-count">{{ affitto | length }} oggett{{ 'o' if affitto | length == 1 else 'i' }}</span>
+    </div>
+    
+    {% for listing in affitto %}
+    <div class="re-listing">
+      <div class="re-carousel" data-carousel>
+        <div class="re-carousel-track" data-track>
+          {% for img in listing.images %}
+          <div class="re-carousel-slide">
+            <img src="{{ img }}" alt="{{ listing.title }} – foto {{ loop.index }}" />
+          </div>
+          {% endfor %}
+        </div>
+        {% if listing.images | length > 1 %}
+        <button class="re-carousel-btn re-carousel-btn--prev" data-prev>‹</button>
+        <button class="re-carousel-btn re-carousel-btn--next" data-next>›</button>
+        <div class="re-carousel-dots" data-dots>
+          {% for img in listing.images %}
+          <span class="re-carousel-dot{{ ' active' if loop.first else '' }}" data-dot="{{ loop.index0 }}"></span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      
+      <div class="re-content">
+        <div class="re-header">
+          <span class="re-place">{{ listing.place }}</span>
+          <span class="re-price">CHF {{ "{:,}".format(listing.price_chf).replace(",", "'") }}{{ listing.price_label }}</span>
+        </div>
+        <h3 class="re-title">{{ listing.title }}</h3>
+        <div class="re-specs">{{ listing.rooms }} • {{ listing.floor }}</div>
+        <p class="re-description">{{ listing.description }}</p>
+        <ul class="re-bullets">
+          {% for bullet in listing.bullets %}
+          <li>{{ bullet }}</li>
+          {% endfor %}
+        </ul>
+        <div class="re-cta">
+          <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Richiedi informazioni</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Carousel functionality
+  document.querySelectorAll('[data-carousel]').forEach(carousel => {
+    const track = carousel.querySelector('[data-track]');
+    const slides = track.querySelectorAll('.re-carousel-slide');
+    const dots = carousel.querySelectorAll('[data-dot]');
+    const prevBtn = carousel.querySelector('[data-prev]');
+    const nextBtn = carousel.querySelector('[data-next]');
+    let idx = 0;
+
+    function go(i) {
+      idx = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, di) => d.classList.toggle('active', di === idx));
+    }
+
+    prevBtn?.addEventListener('click', () => go(idx - 1));
+    nextBtn?.addEventListener('click', () => go(idx + 1));
+    dots.forEach(d => d.addEventListener('click', () => go(+d.dataset.dot)));
+
+    let startX = 0;
+    carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].clientX - startX;
+      if (Math.abs(diff) > 50) go(idx + (diff < 0 ? 1 : -1));
+    }, { passive: true });
+  });
+
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('[data-filter]');
+  const venditaSection = document.getElementById('vendita');
+  const affittoSection = document.getElementById('affitto');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      filterBtns.forEach(b => b.classList.remove('re-filter--active'));
+      btn.classList.add('re-filter--active');
+
+      if (filter === 'vendita') {
+        if (venditaSection) venditaSection.style.display = '';
+        if (affittoSection) affittoSection.style.display = 'none';
+      } else if (filter === 'affitto') {
+        if (venditaSection) venditaSection.style.display = 'none';
+        if (affittoSection) affittoSection.style.display = '';
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

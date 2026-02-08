@@ -1,0 +1,98 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Fernando Curti SA — Contatti{% endblock %}
+
+{% block content %}
+{# ─── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="contact-hero">
+  <div class="container">
+    <div class="section-kicker">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Contatti</span>
+    </div>
+    <h1 class="section-title font-display" style="font-size: clamp(2.5rem, 5vw, 4rem); max-width: 700px;">
+      Parliamo del tuo progetto
+    </h1>
+    <p class="section-subtitle" style="max-width: 600px;">
+      Preventivo chiaro, tempi condivisi, posa pulita. 
+      Compila il modulo o contattaci direttamente.
+    </p>
+  </div>
+</section>
+
+{# ─── CONTACT SECTION ─────────────────────────────────────────────────────── #}
+<section class="section" id="form">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-block">
+          <h3>Indirizzo</h3>
+          <p>{{ company.address }}</p>
+        </div>
+        
+        <div class="contact-block">
+          <h3>Telefono Falegnameria</h3>
+          <p><a href="tel:{{ company.phone_joinery }}">{{ company.phone_joinery }}</a></p>
+        </div>
+        
+        <div class="contact-block">
+          <h3>Telefono Immobiliare</h3>
+          <p><a href="tel:{{ company.phone_real_estate }}">{{ company.phone_real_estate }}</a></p>
+        </div>
+        
+        <div class="contact-block">
+          <h3>Email</h3>
+          <p><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+        </div>
+        
+        <div class="contact-block">
+          <h3>Orari</h3>
+          <p>Lunedì – Venerdì: 07:30 – 12:00, 13:30 – 17:30</p>
+        </div>
+      </div>
+      
+      <div>
+        {% if success %}
+        <div class="form-success">
+          <h4>Messaggio inviato!</h4>
+          <p>Ti risponderemo il prima possibile.</p>
+        </div>
+        {% else %}
+        <form method="POST" class="form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="name">Nome *</label>
+              <input type="text" id="name" name="name" class="form-input" value="{{ form.name }}" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email *</label>
+              <input type="email" id="email" name="email" class="form-input" value="{{ form.email }}" required />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="phone">Telefono</label>
+            <input type="tel" id="phone" name="phone" class="form-input" value="{{ form.phone }}" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="message">Messaggio *</label>
+            <textarea id="message" name="message" class="form-textarea" required>{{ form.message }}</textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Invia messaggio</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2773.8!2d{{ company.maps_lng }}!3d{{ company.maps_lat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478429b92d4c7a8f%3A0xa5901147eb3842b1!2sFernando%20Curti%20SA!5e0!3m2!1sit!2sch!4v1"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

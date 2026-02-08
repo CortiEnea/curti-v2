@@ -1,0 +1,111 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Fernando Curti SA — Chi siamo{% endblock %}
+
+{% block content %}
+{# ─── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="about-hero">
+  <div class="container">
+    <div class="section-kicker">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Chi siamo</span>
+    </div>
+    <h1 class="section-title font-display" style="font-size: clamp(2.5rem, 5vw, 4rem); max-width: 800px;">
+      {{ about.title }}
+    </h1>
+  </div>
+</section>
+
+{# ─── STORY ───────────────────────────────────────────────────────────────── #}
+<section class="section">
+  <div class="container">
+    <div class="about-story">
+      <div class="story-content">
+        <h2 class="font-display">La nostra storia</h2>
+        <p class="story-text">{{ about.story }}</p>
+        <p class="story-text">{{ about.mission }}</p>
+      </div>
+      <div class="story-image">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" alt="Falegnameria" />
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ─── PILLARS ─────────────────────────────────────────────────────────────── #}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-kicker">
+        <span class="section-kicker-line"></span>
+        <span class="section-kicker-text">Il nostro metodo</span>
+      </div>
+      <h2 class="section-title font-display">Come lavoriamo</h2>
+    </div>
+    
+    {% set pillar_images = [
+      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=600&q=80'
+    ] %}
+    <div class="pillars-grid">
+      {% for pillar in about.pillars %}
+      <div class="pillar">
+        <div class="pillar-image">
+          <img src="{{ pillar_images[loop.index0] }}" alt="{{ pillar.title }}" />
+        </div>
+        <h3 class="pillar-title">{{ pillar.title }}</h3>
+        <p class="pillar-text">{{ pillar.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ─── TEAM ────────────────────────────────────────────────────────────────── #}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-kicker">
+        <span class="section-kicker-line"></span>
+        <span class="section-kicker-text">Il team</span>
+      </div>
+      <h2 class="section-title font-display">Direzione</h2>
+      <p class="section-subtitle">
+        L'azienda è oggi guidata dalle figlie di Fernando: Paola e Valentina.
+      </p>
+    </div>
+    
+    <div class="team-grid">
+      {% for person in about.people %}
+      <div class="team-card">
+        <div class="team-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="team-info">
+          <h4>{{ person.name }}</h4>
+          <div class="team-role">{{ person.role }}</div>
+          <p class="team-note">{{ person.note }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ─── CTA ─────────────────────────────────────────────────────────────────── #}
+<section class="section section--dark">
+  <div class="container text-center">
+    <h2 class="section-title font-display" style="max-width: 600px; margin: 0 auto 1.5rem;">
+      Vuoi conoscerci di persona?
+    </h2>
+    <p class="section-subtitle" style="margin: 0 auto 2rem; text-align: center;">
+      Vieni a trovarci nella nostra sede di Ligornetto o contattaci per fissare un appuntamento.
+    </p>
+    <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Contattaci</a>
+  </div>
+</section>
+{% endblock %}
