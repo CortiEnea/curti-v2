@@ -1453,6 +1453,224 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: auto;
 }
 
+/* ─── ADMIN ────────────────────────────────────────────────────────────────── */
+.admin-login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-white);
+  border-radius: 8px;
+  padding: var(--space-2xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+.admin-login-title {
+  font-size: 1.6rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.admin-login-sub {
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-lg);
+}
+
+.admin-flash {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-xs);
+}
+
+.admin-flash--success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.admin-flash--error {
+  background: #fbe9e7;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.admin-nav {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.admin-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.admin-card-header:hover {
+  background: var(--color-bg-alt);
+}
+
+.admin-card-title {
+  font-size: 1.1rem;
+  color: var(--color-primary);
+}
+
+.admin-toggle-icon {
+  font-size: 1.4rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+  user-select: none;
+}
+
+.admin-card-body {
+  padding: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.admin-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-section-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: var(--space-xl) 0 var(--space-md);
+}
+
+.admin-empty {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  padding: var(--space-lg);
+  text-align: center;
+  background: var(--color-bg-alt);
+  border-radius: 8px;
+}
+
+.admin-item-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.admin-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.admin-item-title {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.admin-item-meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.admin-current-image {
+  margin-top: var(--space-md);
+}
+
+.admin-current-image img {
+  max-width: 300px;
+  border-radius: 6px;
+  margin-top: var(--space-xs);
+}
+
+.admin-images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.admin-image-check {
+  position: relative;
+}
+
+.admin-image-check img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.admin-remove-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.admin-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.admin-delete-form {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-btn-delete {
+  background: transparent;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+.admin-btn-delete:hover {
+  background: #fbe9e7;
+}
+
 /* ─── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .nav-links {

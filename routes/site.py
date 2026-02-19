@@ -1,13 +1,15 @@
 from flask import Blueprint, render_template, request
 
-from site_data import ABOUT, PRODUCTS, PROJECTS, REAL_ESTATE, SERVICES, COMPANY, IMAGES
+import db
+from site_data import ABOUT, PRODUCTS, SERVICES, COMPANY, IMAGES
 
 site = Blueprint("site", __name__)
 
 
 @site.get("/")
 def home():
-    return render_template("index.html", services=SERVICES[:3], projects=PROJECTS[:3], images=IMAGES)
+    projects = db.get_projects()[:3]
+    return render_template("index.html", services=SERVICES[:3], projects=projects, images=IMAGES)
 
 
 @site.get("/about")
@@ -17,7 +19,8 @@ def about():
 
 @site.get("/projects")
 def projects():
-    return render_template("projects.html", projects=PROJECTS, images=IMAGES)
+    project_list = db.get_projects()
+    return render_template("projects.html", projects=project_list, images=IMAGES)
 
 
 @site.get("/products")
@@ -27,7 +30,8 @@ def products():
 
 @site.get("/real-estate")
 def real_estate():
-    return render_template("real_estate.html", listings=REAL_ESTATE)
+    listings = db.get_listings()
+    return render_template("real_estate.html", listings=listings)
 
 
 @site.route("/contact", methods=["GET", "POST"])

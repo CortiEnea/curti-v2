@@ -22,11 +22,12 @@
 {# ─── PROJECTS LIST ───────────────────────────────────────────────────────── #}
 <section class="section">
   <div class="container">
-    {% set project_images = ['cucina', 'portoncino', 'armadio'] %}
     {% for project in projects %}
     <div class="project-card">
       <div class="project-image">
-        <img src="{{ images.projects[project_images[loop.index0]] }}" alt="{{ project.title }}" />
+        {% if project.image %}
+        <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" alt="{{ project.title }}" />
+        {% endif %}
       </div>
       <div class="project-content">
         <span class="project-location">{{ project.location }}</span>

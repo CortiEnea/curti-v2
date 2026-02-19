@@ -1,0 +1,369 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Pannello Admin — Fernando Curti SA{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="admin-topbar">
+      <div>
+        <div class="section-kicker">
+          <span class="section-kicker-line"></span>
+          <span class="section-kicker-text">Gestione contenuti</span>
+        </div>
+        <h1 class="section-title font-display" style="font-size:clamp(2rem,4vw,3rem);">
+          Pannello Admin
+        </h1>
+      </div>
+      <a href="{{ url_for('admin.logout') }}" class="btn btn-outline" style="color:var(--color-text);border-color:var(--color-border);">Logout</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div style="margin-top:1.5rem;">
+      {% for category, msg in messages %}
+      <div class="admin-flash admin-flash--{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="admin-nav">
+      <a href="#progetti" class="re-filter re-filter--active" data-admin-tab="progetti">Progetti</a>
+      <a href="#immobili" class="re-filter" data-admin-tab="immobili">Immobili</a>
+    </div>
+  </div>
+</section>
+
+{# ═══════════════════════════════════════════════════════════════════════════
+   PROJECTS TAB
+   ═══════════════════════════════════════════════════════════════════════════ #}
+<section class="section" id="progetti" data-admin-panel="progetti">
+  <div class="container">
+
+    {# ── Add Project Form ─────────────────────────────────────────────────── #}
+    <div class="admin-card">
+      <div class="admin-card-header" data-toggle="form-add-project">
+        <h3 class="admin-card-title">Aggiungi progetto</h3>
+        <span class="admin-toggle-icon">+</span>
+      </div>
+      <div class="admin-card-body" id="form-add-project" style="display:none;">
+        <form method="POST" action="{{ url_for('admin.project_add') }}" enctype="multipart/form-data">
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label class="form-label">Titolo *</label>
+              <input class="form-input" name="title" placeholder="Es: Cucina su misura con isola" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Luogo *</label>
+              <input class="form-input" name="location" placeholder="Es: Lugano" required />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Obiettivo *</label>
+              <textarea class="form-textarea" name="goal" rows="2" placeholder="Obiettivo del progetto" required></textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Soluzione *</label>
+              <textarea class="form-textarea" name="solution" rows="3" placeholder="Soluzione adottata" required></textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Materiali *</label>
+              <textarea class="form-textarea" name="materials" rows="2" placeholder="Materiali utilizzati" required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Immagine (upload)</label>
+              <input class="form-input" type="file" name="image" accept="image/*" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">oppure URL immagine</label>
+              <input class="form-input" name="image_url" placeholder="https://..." />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Salva progetto</button>
+        </form>
+      </div>
+    </div>
+
+    {# ── Existing Projects ────────────────────────────────────────────────── #}
+    <h3 class="admin-section-label">Progetti esistenti ({{ projects|length }})</h3>
+
+    {% if not projects %}
+    <p class="admin-empty">Nessun progetto presente. Aggiungine uno!</p>
+    {% endif %}
+
+    {% for project in projects %}
+    <div class="admin-card">
+      <div class="admin-card-header" data-toggle="project-{{ project.id }}">
+        <div class="admin-item-summary">
+          {% if project.image %}
+          <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" class="admin-thumb" alt="" />
+          {% endif %}
+          <div>
+            <h4 class="admin-item-title">{{ project.title }}</h4>
+            <span class="admin-item-meta">{{ project.location }}</span>
+          </div>
+        </div>
+        <span class="admin-toggle-icon">+</span>
+      </div>
+      <div class="admin-card-body" id="project-{{ project.id }}" style="display:none;">
+        <form method="POST" action="{{ url_for('admin.project_edit', project_id=project.id) }}" enctype="multipart/form-data">
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label class="form-label">Titolo *</label>
+              <input class="form-input" name="title" value="{{ project.title }}" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Luogo *</label>
+              <input class="form-input" name="location" value="{{ project.location }}" required />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Obiettivo *</label>
+              <textarea class="form-textarea" name="goal" rows="2" required>{{ project.goal }}</textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Soluzione *</label>
+              <textarea class="form-textarea" name="solution" rows="3" required>{{ project.solution }}</textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Materiali *</label>
+              <textarea class="form-textarea" name="materials" rows="2" required>{{ project.materials }}</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nuova immagine (upload)</label>
+              <input class="form-input" type="file" name="image" accept="image/*" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">oppure URL immagine</label>
+              <input class="form-input" name="image_url" placeholder="https://..." />
+            </div>
+          </div>
+          {% if project.image %}
+          <div class="admin-current-image">
+            <span class="form-label">Immagine attuale:</span>
+            <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" alt="" />
+          </div>
+          {% endif %}
+          <div class="admin-actions">
+            <button type="submit" class="btn btn-primary">Salva modifiche</button>
+          </div>
+        </form>
+        <form method="POST" action="{{ url_for('admin.project_delete', project_id=project.id) }}" class="admin-delete-form" onsubmit="return confirm('Eliminare questo progetto?');">
+          <button type="submit" class="btn admin-btn-delete">Elimina progetto</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
+
+{# ═══════════════════════════════════════════════════════════════════════════
+   REAL ESTATE TAB
+   ═══════════════════════════════════════════════════════════════════════════ #}
+<section class="section section--alt" id="immobili" data-admin-panel="immobili" style="display:none;">
+  <div class="container">
+
+    {# ── Add Listing Form ─────────────────────────────────────────────────── #}
+    <div class="admin-card">
+      <div class="admin-card-header" data-toggle="form-add-listing">
+        <h3 class="admin-card-title">Aggiungi immobile</h3>
+        <span class="admin-toggle-icon">+</span>
+      </div>
+      <div class="admin-card-body" id="form-add-listing" style="display:none;">
+        <form method="POST" action="{{ url_for('admin.listing_add') }}" enctype="multipart/form-data">
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label class="form-label">Tipo *</label>
+              <select class="form-input" name="listing_type" required>
+                <option value="">Seleziona</option>
+                <option value="vendita">In vendita</option>
+                <option value="affitto">In affitto</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Luogo *</label>
+              <input class="form-input" name="place" placeholder="Es: Mendrisio" required />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Titolo *</label>
+              <input class="form-input" name="title" placeholder="Es: Affittasi 4.5 locali al 3° piano" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Locali *</label>
+              <input class="form-input" name="rooms" placeholder="Es: 4.5 locali" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Piano *</label>
+              <input class="form-input" name="floor" placeholder="Es: 3° piano" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Prezzo (CHF) *</label>
+              <input class="form-input" type="number" name="price_chf" placeholder="1550" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Etichetta prezzo</label>
+              <input class="form-input" name="price_label" placeholder="Es: /mese (vuoto per vendita)" />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Descrizione *</label>
+              <textarea class="form-textarea" name="description" rows="4" placeholder="Descrizione dell'immobile" required></textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Dettagli (uno per riga)</label>
+              <textarea class="form-textarea" name="bullets" rows="4" placeholder="Pigione mensile Fr. 1'300.–&#10;Acconto spese mensile Fr. 250.–&#10;Ascensore"></textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Immagini (upload multiplo)</label>
+              <input class="form-input" type="file" name="images" accept="image/*" multiple />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">oppure URL immagini (uno per riga)</label>
+              <textarea class="form-textarea" name="image_urls" rows="3" placeholder="https://...&#10;https://..."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Salva immobile</button>
+        </form>
+      </div>
+    </div>
+
+    {# ── Existing Listings ────────────────────────────────────────────────── #}
+    <h3 class="admin-section-label">Immobili esistenti ({{ listings|length }})</h3>
+
+    {% if not listings %}
+    <p class="admin-empty">Nessun immobile presente. Aggiungine uno!</p>
+    {% endif %}
+
+    {% for listing in listings %}
+    <div class="admin-card">
+      <div class="admin-card-header" data-toggle="listing-{{ listing.id }}">
+        <div class="admin-item-summary">
+          {% if listing.images %}
+          <img src="{{ listing.images[0] }}" class="admin-thumb" alt="" />
+          {% endif %}
+          <div>
+            <h4 class="admin-item-title">{{ listing.title }}</h4>
+            <span class="admin-item-meta">
+              <span class="re-badge {% if listing.listing_type == 'vendita' %}re-badge--sale{% else %}re-badge--rent{% endif %}" style="font-size:0.65rem;padding:0.2rem 0.5rem;">
+                {{ 'Vendita' if listing.listing_type == 'vendita' else 'Affitto' }}
+              </span>
+              {{ listing.place }} — CHF {{ "{:,}".format(listing.price_chf).replace(",", "'") }}{{ listing.price_label }}
+            </span>
+          </div>
+        </div>
+        <span class="admin-toggle-icon">+</span>
+      </div>
+      <div class="admin-card-body" id="listing-{{ listing.id }}" style="display:none;">
+        <form method="POST" action="{{ url_for('admin.listing_edit', listing_id=listing.id) }}" enctype="multipart/form-data">
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label class="form-label">Tipo *</label>
+              <select class="form-input" name="listing_type" required>
+                <option value="vendita" {{ 'selected' if listing.listing_type == 'vendita' }}>In vendita</option>
+                <option value="affitto" {{ 'selected' if listing.listing_type == 'affitto' }}>In affitto</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Luogo *</label>
+              <input class="form-input" name="place" value="{{ listing.place }}" required />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Titolo *</label>
+              <input class="form-input" name="title" value="{{ listing.title }}" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Locali *</label>
+              <input class="form-input" name="rooms" value="{{ listing.rooms }}" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Piano *</label>
+              <input class="form-input" name="floor" value="{{ listing.floor }}" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Prezzo (CHF) *</label>
+              <input class="form-input" type="number" name="price_chf" value="{{ listing.price_chf }}" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Etichetta prezzo</label>
+              <input class="form-input" name="price_label" value="{{ listing.price_label }}" />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Descrizione *</label>
+              <textarea class="form-textarea" name="description" rows="4" required>{{ listing.description }}</textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Dettagli (uno per riga)</label>
+              <textarea class="form-textarea" name="bullets" rows="4">{{ listing.bullets | join('\n') }}</textarea>
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">Aggiungi immagini (upload)</label>
+              <input class="form-input" type="file" name="images" accept="image/*" multiple />
+            </div>
+            <div class="form-group admin-full">
+              <label class="form-label">oppure aggiungi URL immagini (uno per riga)</label>
+              <textarea class="form-textarea" name="image_urls" rows="2" placeholder="https://..."></textarea>
+            </div>
+          </div>
+
+          {% if listing.images %}
+          <div class="admin-images-grid">
+            <span class="form-label" style="grid-column:1/-1;">Immagini attuali:</span>
+            {% for img in listing.images %}
+            <label class="admin-image-check">
+              <img src="{{ img }}" alt="" />
+              <label class="admin-remove-label">
+                <input type="checkbox" name="remove_images" value="{{ img }}" /> Rimuovi
+              </label>
+            </label>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="admin-actions">
+            <button type="submit" class="btn btn-primary">Salva modifiche</button>
+          </div>
+        </form>
+        <form method="POST" action="{{ url_for('admin.listing_delete', listing_id=listing.id) }}" class="admin-delete-form" onsubmit="return confirm('Eliminare questo immobile?');">
+          <button type="submit" class="btn admin-btn-delete">Elimina immobile</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Accordion toggle
+  document.querySelectorAll('[data-toggle]').forEach(header => {
+    header.addEventListener('click', () => {
+      const target = document.getElementById(header.dataset.toggle);
+      if (!target) return;
+      const isOpen = target.style.display !== 'none';
+      target.style.display = isOpen ? 'none' : 'block';
+      const icon = header.querySelector('.admin-toggle-icon');
+      if (icon) icon.textContent = isOpen ? '+' : '−';
+    });
+  });
+
+  // Tab switching
+  const tabs = document.querySelectorAll('[data-admin-tab]');
+  const panels = document.querySelectorAll('[data-admin-panel]');
+
+  function activateTab(name) {
+    tabs.forEach(t => t.classList.toggle('re-filter--active', t.dataset.adminTab === name));
+    panels.forEach(p => p.style.display = p.dataset.adminPanel === name ? '' : 'none');
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      activateTab(tab.dataset.adminTab);
+    });
+  });
+
+  // Activate tab from URL hash
+  const hash = window.location.hash.replace('#', '');
+  if (hash === 'immobili') activateTab('immobili');
+});
+</script>
+{% endblock %}

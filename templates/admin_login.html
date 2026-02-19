@@ -1,0 +1,43 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Admin — Fernando Curti SA{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="section-kicker">
+      <span class="section-kicker-line"></span>
+      <span class="section-kicker-text">Accesso riservato</span>
+    </div>
+    <h1 class="section-title font-display" style="font-size:clamp(2.5rem,5vw,4rem);max-width:700px;">
+      Admin
+    </h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="display:flex;justify-content:center;">
+    <div class="admin-login-card">
+      <h2 class="admin-login-title font-display">Accedi al pannello</h2>
+      <p class="admin-login-sub">Inserisci la password per gestire i contenuti del sito.</p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div style="margin-bottom:1.5rem;">
+        {% for category, msg in messages %}
+        <div class="admin-flash admin-flash--{{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('admin.login') }}">
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-input" type="password" id="password" name="password" placeholder="Inserisci la password" required autofocus />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Accedi</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
