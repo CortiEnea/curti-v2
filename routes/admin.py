@@ -13,7 +13,11 @@ import db
 
 admin = Blueprint("admin", __name__, url_prefix="/admin")
 
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "uploads")
+IS_VERCEL = bool(os.getenv("VERCEL"))
+if IS_VERCEL:
+    UPLOAD_FOLDER = "/tmp/uploads"
+else:
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "uploads")
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 
 

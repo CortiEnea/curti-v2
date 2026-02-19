@@ -5,7 +5,8 @@ import os
 import sqlite3
 from contextlib import contextmanager
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "database.db")
+IS_VERCEL = bool(os.getenv("VERCEL"))
+DB_PATH = "/tmp/database.db" if IS_VERCEL else os.path.join(os.path.dirname(__file__), "database.db")
 
 
 def _row_factory(cursor: sqlite3.Cursor, row: tuple) -> dict:
