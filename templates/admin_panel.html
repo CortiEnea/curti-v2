@@ -92,7 +92,7 @@
 
     {% for project in projects %}
     <div class="admin-card">
-      <div class="admin-card-header" data-toggle="project-{{ project.id }}">
+      <div class="admin-card-header">
         <div class="admin-item-summary">
           {% if project.image %}
           <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" class="admin-thumb" alt="" />
@@ -102,7 +102,12 @@
             <span class="admin-item-meta">{{ project.location }}</span>
           </div>
         </div>
-        <span class="admin-toggle-icon">+</span>
+        <div class="admin-header-actions">
+          <button type="button" class="admin-action-btn admin-action-btn--edit" data-toggle="project-{{ project.id }}">Modifica</button>
+          <form method="POST" action="{{ url_for('admin.project_delete', project_id=project.id) }}" onsubmit="return confirm('Eliminare questo progetto?');">
+            <button type="submit" class="admin-action-btn admin-action-btn--delete">Elimina</button>
+          </form>
+        </div>
       </div>
       <div class="admin-card-body" id="project-{{ project.id }}" style="display:none;">
         <form method="POST" action="{{ url_for('admin.project_edit', project_id=project.id) }}" enctype="multipart/form-data">
@@ -145,9 +150,6 @@
           <div class="admin-actions">
             <button type="submit" class="btn btn-primary">Salva modifiche</button>
           </div>
-        </form>
-        <form method="POST" action="{{ url_for('admin.project_delete', project_id=project.id) }}" class="admin-delete-form" onsubmit="return confirm('Eliminare questo progetto?');">
-          <button type="submit" class="btn admin-btn-delete">Elimina progetto</button>
         </form>
       </div>
     </div>
@@ -234,7 +236,7 @@
 
     {% for listing in listings %}
     <div class="admin-card">
-      <div class="admin-card-header" data-toggle="listing-{{ listing.id }}">
+      <div class="admin-card-header">
         <div class="admin-item-summary">
           {% if listing.images %}
           <img src="{{ listing.images[0] }}" class="admin-thumb" alt="" />
@@ -249,7 +251,12 @@
             </span>
           </div>
         </div>
-        <span class="admin-toggle-icon">+</span>
+        <div class="admin-header-actions">
+          <button type="button" class="admin-action-btn admin-action-btn--edit" data-toggle="listing-{{ listing.id }}">Modifica</button>
+          <form method="POST" action="{{ url_for('admin.listing_delete', listing_id=listing.id) }}" onsubmit="return confirm('Eliminare questo immobile?');">
+            <button type="submit" class="admin-action-btn admin-action-btn--delete">Elimina</button>
+          </form>
+        </div>
       </div>
       <div class="admin-card-body" id="listing-{{ listing.id }}" style="display:none;">
         <form method="POST" action="{{ url_for('admin.listing_edit', listing_id=listing.id) }}" enctype="multipart/form-data">
@@ -321,9 +328,6 @@
             <button type="submit" class="btn btn-primary">Salva modifiche</button>
           </div>
         </form>
-        <form method="POST" action="{{ url_for('admin.listing_delete', listing_id=listing.id) }}" class="admin-delete-form" onsubmit="return confirm('Eliminare questo immobile?');">
-          <button type="submit" class="btn admin-btn-delete">Elimina immobile</button>
-        </form>
       </div>
     </div>
     {% endfor %}
@@ -334,14 +338,13 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // Accordion toggle
-  document.querySelectorAll('[data-toggle]').forEach(header => {
-    header.addEventListener('click', () => {
-      const target = document.getElementById(header.dataset.toggle);
+  document.querySelectorAll('[data-toggle]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const target = document.getElementById(el.dataset.toggle);
       if (!target) return;
       const isOpen = target.style.display !== 'none';
       target.style.display = isOpen ? 'none' : 'block';
-      const icon = header.querySelector('.admin-toggle-icon');
-      if (icon) icon.textContent = isOpen ? '+' : '−';
     });
   });
 
