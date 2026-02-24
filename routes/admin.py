@@ -94,20 +94,21 @@ def project_add():
     solution = (request.form.get("solution") or "").strip()
     materials = (request.form.get("materials") or "").strip()
 
-    image = ""
-    file = request.files.get("image")
-    if file and file.filename and _allowed(file.filename):
-        image = _save_upload(file)
-
-    image_url = (request.form.get("image_url") or "").strip()
-    if not image and image_url:
-        image = image_url
-
     if not all([title, location, goal, solution, materials]):
         flash("Compila tutti i campi obbligatori.", "error")
         return redirect(url_for("admin.panel") + "#progetti")
 
-    db.create_project(title, location, goal, solution, materials, image)
+    images = []
+    files = request.files.getlist("images")
+    for f in files:
+        if f and f.filename and _allowed(f.filename):
+            images.append(url_for("static", filename=_save_upload(f)))
+
+    image_urls = (request.form.get("image_urls") or "").strip()
+    if image_urls:
+        images.extend([u.strip() for u in image_urls.split("\n") if u.strip()])
+
+    db.create_project(title, location, goal, solution, materials, images)
     flash("Progetto aggiunto.", "success")
     return redirect(url_for("admin.panel") + "#progetti")
 
@@ -126,20 +127,26 @@ def project_edit(project_id: int):
     solution = (request.form.get("solution") or "").strip()
     materials = (request.form.get("materials") or "").strip()
 
-    image = project["image"]
-    file = request.files.get("image")
-    if file and file.filename and _allowed(file.filename):
-        image = _save_upload(file)
-
-    image_url = (request.form.get("image_url") or "").strip()
-    if image_url:
-        image = image_url
-
     if not all([title, location, goal, solution, materials]):
         flash("Compila tutti i campi obbligatori.", "error")
         return redirect(url_for("admin.panel") + "#progetti")
 
-    db.update_project(project_id, title, location, goal, solution, materials, image)
+    images = list(project["images"])
+
+    files = request.files.getlist("images")
+    for f in files:
+        if f and f.filename and _allowed(f.filename):
+            images.append(url_for("static", filename=_save_upload(f)))
+
+    image_urls = (request.form.get("image_urls") or "").strip()
+    if image_urls:
+        images.extend([u.strip() for u in image_urls.split("\n") if u.strip()])
+
+    remove_images = request.form.getlist("remove_images")
+    if remove_images:
+        images = [img for img in images if img not in remove_images]
+
+    db.update_project(project_id, title, location, goal, solution, materials, images)
     flash("Progetto aggiornato.", "success")
     return redirect(url_for("admin.panel") + "#progetti")
 

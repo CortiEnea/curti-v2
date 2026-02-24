@@ -69,13 +69,10 @@
               <label class="form-label">Materiali *</label>
               <textarea class="form-textarea" name="materials" rows="2" placeholder="Materiali utilizzati" required></textarea>
             </div>
-            <div class="form-group">
-              <label class="form-label">Immagine (upload)</label>
-              <input class="form-input" type="file" name="image" accept="image/*" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">oppure URL immagine</label>
-              <input class="form-input" name="image_url" placeholder="https://..." />
+            <div class="form-group admin-full">
+              <label class="form-label">Immagini</label>
+              <input class="form-input" type="file" name="images" accept="image/*" multiple data-preview="preview-add-project" />
+              <div class="admin-upload-preview" id="preview-add-project"></div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Salva progetto</button>
@@ -83,33 +80,45 @@
       </div>
     </div>
 
-    {# ── Existing Projects ────────────────────────────────────────────────── #}
+    {# ── Existing Projects Grid ───────────────────────────────────────────── #}
     <h3 class="admin-section-label">Progetti esistenti ({{ projects|length }})</h3>
 
     {% if not projects %}
     <p class="admin-empty">Nessun progetto presente. Aggiungine uno!</p>
     {% endif %}
 
-    {% for project in projects %}
-    <div class="admin-card">
-      <div class="admin-card-header">
-        <div class="admin-item-summary">
-          {% if project.image %}
-          <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" class="admin-thumb" alt="" />
+    <div class="admin-cards-grid">
+      {% for project in projects %}
+      <div class="admin-card admin-card--vert">
+        <div class="admin-card-cover {% if not project.images %}admin-card-cover--placeholder{% endif %}">
+          {% if project.images %}
+          <img src="{{ project.images[0] }}" alt="{{ project.title }}" />
+          {% else %}
+          &#128247;
           {% endif %}
-          <div>
-            <h4 class="admin-item-title">{{ project.title }}</h4>
-            <span class="admin-item-meta">{{ project.location }}</span>
-          </div>
         </div>
-        <div class="admin-header-actions">
-          <button type="button" class="admin-action-btn admin-action-btn--edit" data-toggle="project-{{ project.id }}">Modifica</button>
+        <div class="admin-card-info">
+          <h4 class="admin-item-title">{{ project.title }}</h4>
+          <span class="admin-item-meta">{{ project.location }}</span>
+        </div>
+        <div class="admin-card-footer">
+          <button type="button" class="admin-action-btn admin-action-btn--edit" style="flex:1;" data-toggle="edit-project-{{ project.id }}">Modifica</button>
           <form method="POST" action="{{ url_for('admin.project_delete', project_id=project.id) }}" onsubmit="return confirm('Eliminare questo progetto?');">
             <button type="submit" class="admin-action-btn admin-action-btn--delete">Elimina</button>
           </form>
         </div>
       </div>
-      <div class="admin-card-body" id="project-{{ project.id }}" style="display:none;">
+      {% endfor %}
+    </div>
+
+    {# ── Edit panels (full-width, outside grid) ───────────────────────────── #}
+    {% for project in projects %}
+    <div class="admin-edit-panel" id="edit-project-{{ project.id }}" style="display:none;">
+      <div class="admin-edit-panel-header">
+        <span class="admin-edit-panel-title">Modifica: {{ project.title }}</span>
+        <button type="button" class="admin-action-btn" style="font-size:0.75rem;" data-toggle="edit-project-{{ project.id }}">Chiudi ✕</button>
+      </div>
+      <div class="admin-edit-panel-body">
         <form method="POST" action="{{ url_for('admin.project_edit', project_id=project.id) }}" enctype="multipart/form-data">
           <div class="admin-form-grid">
             <div class="form-group">
@@ -132,21 +141,27 @@
               <label class="form-label">Materiali *</label>
               <textarea class="form-textarea" name="materials" rows="2" required>{{ project.materials }}</textarea>
             </div>
-            <div class="form-group">
-              <label class="form-label">Nuova immagine (upload)</label>
-              <input class="form-input" type="file" name="image" accept="image/*" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">oppure URL immagine</label>
-              <input class="form-input" name="image_url" placeholder="https://..." />
+            <div class="form-group admin-full">
+              <label class="form-label">Aggiungi immagini</label>
+              <input class="form-input" type="file" name="images" accept="image/*" multiple data-preview="preview-project-{{ project.id }}" />
+              <div class="admin-upload-preview" id="preview-project-{{ project.id }}"></div>
             </div>
           </div>
-          {% if project.image %}
-          <div class="admin-current-image">
-            <span class="form-label">Immagine attuale:</span>
-            <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" alt="" />
+
+          {% if project.images %}
+          <div class="admin-images-grid" style="margin-top:var(--space-md);">
+            <span class="form-label" style="grid-column:1/-1;">Immagini attuali:</span>
+            {% for img in project.images %}
+            <label class="admin-image-check">
+              <img src="{{ img }}" alt="" />
+              <label class="admin-remove-label">
+                <input type="checkbox" name="remove_images" value="{{ img }}" /> Rimuovi
+              </label>
+            </label>
+            {% endfor %}
           </div>
           {% endif %}
+
           <div class="admin-actions">
             <button type="submit" class="btn btn-primary">Salva modifiche</button>
           </div>
@@ -215,11 +230,8 @@
             </div>
             <div class="form-group admin-full">
               <label class="form-label">Immagini (upload multiplo)</label>
-              <input class="form-input" type="file" name="images" accept="image/*" multiple />
-            </div>
-            <div class="form-group admin-full">
-              <label class="form-label">oppure URL immagini (uno per riga)</label>
-              <textarea class="form-textarea" name="image_urls" rows="3" placeholder="https://...&#10;https://..."></textarea>
+              <input class="form-input" type="file" name="images" accept="image/*" multiple data-preview="preview-add-listing" />
+              <div class="admin-upload-preview" id="preview-add-listing"></div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Salva immobile</button>
@@ -227,38 +239,50 @@
       </div>
     </div>
 
-    {# ── Existing Listings ────────────────────────────────────────────────── #}
+    {# ── Existing Listings Grid ───────────────────────────────────────────── #}
     <h3 class="admin-section-label">Immobili esistenti ({{ listings|length }})</h3>
 
     {% if not listings %}
     <p class="admin-empty">Nessun immobile presente. Aggiungine uno!</p>
     {% endif %}
 
-    {% for listing in listings %}
-    <div class="admin-card">
-      <div class="admin-card-header">
-        <div class="admin-item-summary">
+    <div class="admin-cards-grid">
+      {% for listing in listings %}
+      <div class="admin-card admin-card--vert">
+        <div class="admin-card-cover {% if not listing.images %}admin-card-cover--placeholder{% endif %}">
           {% if listing.images %}
-          <img src="{{ listing.images[0] }}" class="admin-thumb" alt="" />
+          <img src="{{ listing.images[0] }}" alt="{{ listing.title }}" />
+          {% else %}
+          &#127968;
           {% endif %}
-          <div>
-            <h4 class="admin-item-title">{{ listing.title }}</h4>
-            <span class="admin-item-meta">
-              <span class="re-badge {% if listing.listing_type == 'vendita' %}re-badge--sale{% else %}re-badge--rent{% endif %}" style="font-size:0.65rem;padding:0.2rem 0.5rem;">
-                {{ 'Vendita' if listing.listing_type == 'vendita' else 'Affitto' }}
-              </span>
-              {{ listing.place }} — CHF {{ "{:,}".format(listing.price_chf).replace(",", "'") }}{{ listing.price_label }}
-            </span>
-          </div>
         </div>
-        <div class="admin-header-actions">
-          <button type="button" class="admin-action-btn admin-action-btn--edit" data-toggle="listing-{{ listing.id }}">Modifica</button>
+        <div class="admin-card-info">
+          <h4 class="admin-item-title">{{ listing.title }}</h4>
+          <span class="admin-item-meta">
+            <span class="re-badge {% if listing.listing_type == 'vendita' %}re-badge--sale{% else %}re-badge--rent{% endif %}" style="font-size:0.65rem;padding:0.2rem 0.5rem;">
+              {{ 'Vendita' if listing.listing_type == 'vendita' else 'Affitto' }}
+            </span>
+            {{ listing.place }} — CHF {{ "{:,}".format(listing.price_chf).replace(",", "'") }}{{ listing.price_label }}
+          </span>
+        </div>
+        <div class="admin-card-footer">
+          <button type="button" class="admin-action-btn admin-action-btn--edit" style="flex:1;" data-toggle="edit-listing-{{ listing.id }}">Modifica</button>
           <form method="POST" action="{{ url_for('admin.listing_delete', listing_id=listing.id) }}" onsubmit="return confirm('Eliminare questo immobile?');">
             <button type="submit" class="admin-action-btn admin-action-btn--delete">Elimina</button>
           </form>
         </div>
       </div>
-      <div class="admin-card-body" id="listing-{{ listing.id }}" style="display:none;">
+      {% endfor %}
+    </div>
+
+    {# ── Edit panels (full-width, outside grid) ───────────────────────────── #}
+    {% for listing in listings %}
+    <div class="admin-edit-panel" id="edit-listing-{{ listing.id }}" style="display:none;">
+      <div class="admin-edit-panel-header">
+        <span class="admin-edit-panel-title">Modifica: {{ listing.title }}</span>
+        <button type="button" class="admin-action-btn" style="font-size:0.75rem;" data-toggle="edit-listing-{{ listing.id }}">Chiudi ✕</button>
+      </div>
+      <div class="admin-edit-panel-body">
         <form method="POST" action="{{ url_for('admin.listing_edit', listing_id=listing.id) }}" enctype="multipart/form-data">
           <div class="admin-form-grid">
             <div class="form-group">
@@ -302,16 +326,13 @@
             </div>
             <div class="form-group admin-full">
               <label class="form-label">Aggiungi immagini (upload)</label>
-              <input class="form-input" type="file" name="images" accept="image/*" multiple />
-            </div>
-            <div class="form-group admin-full">
-              <label class="form-label">oppure aggiungi URL immagini (uno per riga)</label>
-              <textarea class="form-textarea" name="image_urls" rows="2" placeholder="https://..."></textarea>
+              <input class="form-input" type="file" name="images" accept="image/*" multiple data-preview="preview-listing-{{ listing.id }}" />
+              <div class="admin-upload-preview" id="preview-listing-{{ listing.id }}"></div>
             </div>
           </div>
 
           {% if listing.images %}
-          <div class="admin-images-grid">
+          <div class="admin-images-grid" style="margin-top:var(--space-md);">
             <span class="form-label" style="grid-column:1/-1;">Immagini attuali:</span>
             {% for img in listing.images %}
             <label class="admin-image-check">
@@ -337,7 +358,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Accordion toggle
+  // Toggle (accordion + edit panels)
   document.querySelectorAll('[data-toggle]').forEach(el => {
     el.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -345,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!target) return;
       const isOpen = target.style.display !== 'none';
       target.style.display = isOpen ? 'none' : 'block';
+      if (!isOpen) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
 
@@ -364,9 +386,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Activate tab from URL hash
   const hash = window.location.hash.replace('#', '');
   if (hash === 'immobili') activateTab('immobili');
+
+  // Upload preview
+  document.querySelectorAll('input[type="file"][data-preview]').forEach(input => {
+    input.addEventListener('change', () => {
+      const container = document.getElementById(input.dataset.preview);
+      if (!container) return;
+      container.innerHTML = '';
+      Array.from(input.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const wrap = document.createElement('div');
+          wrap.className = 'admin-preview-item';
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          const name = document.createElement('span');
+          name.className = 'admin-preview-name';
+          name.textContent = file.name;
+          wrap.appendChild(img);
+          wrap.appendChild(name);
+          container.appendChild(wrap);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  });
 });
 </script>
 {% endblock %}

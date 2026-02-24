@@ -40,6 +40,7 @@ def init_db():
                 solution    TEXT    NOT NULL,
                 materials   TEXT    NOT NULL,
                 image       TEXT    DEFAULT '',
+                images      TEXT    DEFAULT '[]',
                 created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
 
@@ -58,34 +59,54 @@ def init_db():
                 created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         """)
+        # Migration: add images column to projects if it doesn't exist yet
+        try:
+            conn.execute("ALTER TABLE projects ADD COLUMN images TEXT DEFAULT '[]'")
+        except sqlite3.OperationalError:
+            pass
+        # Migrate old single image into images array for rows that still have image but empty images
+        rows = conn.execute("SELECT id, image, images FROM projects WHERE image != '' AND (images IS NULL OR images = '[]')").fetchall()
+        for row in rows:
+            conn.execute(
+                "UPDATE projects SET images = ? WHERE id = ?",
+                (json.dumps([row["image"]], ensure_ascii=False), row["id"]),
+            )
 
 
 # ── Projects ──────────────────────────────────────────────────────────────────
 
 def get_projects() -> list[dict]:
     with get_db() as conn:
-        return conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
+        rows = conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
+    for row in rows:
+        row["images"] = json.loads(row.get("images") or "[]")
+    return rows
 
 
 def get_project(project_id: int) -> dict | None:
     with get_db() as conn:
-        return conn.execute("SELECT * FROM projects WHERE id = ?", (project_id,)).fetchone()
+        row = conn.execute("SELECT * FROM projects WHERE id = ?", (project_id,)).fetchone()
+    if row:
+        row["images"] = json.loads(row.get("images") or "[]")
+    return row
 
 
-def create_project(title: str, location: str, goal: str, solution: str, materials: str, image: str = "") -> int:
+def create_project(title: str, location: str, goal: str, solution: str, materials: str, images: list[str] | None = None) -> int:
+    imgs = images or []
     with get_db() as conn:
         cur = conn.execute(
-            "INSERT INTO projects (title, location, goal, solution, materials, image) VALUES (?, ?, ?, ?, ?, ?)",
-            (title, location, goal, solution, materials, image),
+            "INSERT INTO projects (title, location, goal, solution, materials, images) VALUES (?, ?, ?, ?, ?, ?)",
+            (title, location, goal, solution, materials, json.dumps(imgs, ensure_ascii=False)),
         )
         return cur.lastrowid
 
 
-def update_project(project_id: int, title: str, location: str, goal: str, solution: str, materials: str, image: str = "") -> None:
+def update_project(project_id: int, title: str, location: str, goal: str, solution: str, materials: str, images: list[str] | None = None) -> None:
+    imgs = images or []
     with get_db() as conn:
         conn.execute(
-            "UPDATE projects SET title=?, location=?, goal=?, solution=?, materials=?, image=? WHERE id=?",
-            (title, location, goal, solution, materials, image, project_id),
+            "UPDATE projects SET title=?, location=?, goal=?, solution=?, materials=?, images=? WHERE id=?",
+            (title, location, goal, solution, materials, json.dumps(imgs, ensure_ascii=False), project_id),
         )
 
 
@@ -164,9 +185,10 @@ def seed_defaults():
             image_keys = ["cucina", "portoncino", "armadio"]
             for i, p in enumerate(PROJECTS):
                 img = IMAGES["projects"].get(image_keys[i], "") if i < len(image_keys) else ""
+                imgs = [img] if img else []
                 conn.execute(
-                    "INSERT INTO projects (title, location, goal, solution, materials, image) VALUES (?, ?, ?, ?, ?, ?)",
-                    (p.title, p.location, p.goal, p.solution, p.materials, img),
+                    "INSERT INTO projects (title, location, goal, solution, materials, images) VALUES (?, ?, ?, ?, ?, ?)",
+                    (p.title, p.location, p.goal, p.solution, p.materials, _json.dumps(imgs, ensure_ascii=False)),
                 )
 
         count = conn.execute("SELECT COUNT(*) as c FROM real_estate").fetchone()["c"]
