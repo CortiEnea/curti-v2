@@ -112,8 +112,8 @@
       {% for project in projects %}
       <div class="card">
         <div class="card-image">
-          {% if project.image %}
-          <img src="{% if project.image.startswith('http') %}{{ project.image }}{% else %}{{ url_for('static', filename=project.image) }}{% endif %}" alt="{{ project.title }}" />
+          {% if project.images %}
+          <img src="{{ project.images[0] }}" alt="{{ project.title }}" />
           {% endif %}
         </div>
         <div class="card-content">

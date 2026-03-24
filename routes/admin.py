@@ -132,11 +132,16 @@ def project_edit(project_id: int):
         return redirect(url_for("admin.panel") + "#progetti")
 
     images = list(project["images"])
+    new_images = []
 
     files = request.files.getlist("images")
     for f in files:
         if f and f.filename and _allowed(f.filename):
-            images.append(url_for("static", filename=_save_upload(f)))
+            new_images.append(url_for("static", filename=_save_upload(f)))
+
+    # Put newly uploaded images first so the project cover updates immediately.
+    if new_images:
+        images = new_images + images
 
     image_urls = (request.form.get("image_urls") or "").strip()
     if image_urls:
@@ -232,13 +237,16 @@ def listing_edit(listing_id: int):
     bullets = [b.strip() for b in bullets_raw.split("\n") if b.strip()]
 
     images = list(listing["images"])
+    new_images = []
 
     files = request.files.getlist("images")
-    new_uploads = False
     for f in files:
         if f and f.filename and _allowed(f.filename):
-            images.append(url_for("static", filename=_save_upload(f)))
-            new_uploads = True
+            new_images.append(url_for("static", filename=_save_upload(f)))
+
+    # Keep behavior aligned with projects: latest upload becomes first image.
+    if new_images:
+        images = new_images + images
 
     image_urls = (request.form.get("image_urls") or "").strip()
     if image_urls:
