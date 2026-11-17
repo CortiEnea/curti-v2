@@ -27,11 +27,11 @@
           <a class="nav-cta" href="{{ url_for('site.contact') }}">Contatti</a>
         </div>
 
-        <div class="nav-toggle" id="navToggle">
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Apri il menu" aria-expanded="false">
           <span></span>
           <span></span>
           <span></span>
-        </div>
+        </button>
       </div>
     </nav>
 
@@ -97,9 +97,22 @@
         if (window.scrollY > 50) {
           nav.classList.add('nav--scrolled');
         } else if (isHomePage) {
-          // Only remove scrolled class on home page
           nav.classList.remove('nav--scrolled');
         }
+      });
+
+      const navToggle = document.getElementById('navToggle');
+      navToggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('nav--open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        navToggle.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu');
+      });
+      nav.querySelectorAll('.nav-links a').forEach((link) => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('nav--open');
+          navToggle.setAttribute('aria-expanded', 'false');
+          navToggle.setAttribute('aria-label', 'Apri il menu');
+        });
       });
     </script>
   </body>

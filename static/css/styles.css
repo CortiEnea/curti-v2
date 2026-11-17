@@ -1903,10 +1903,42 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .nav-links {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--color-white);
+    padding: 0.25rem var(--space-md) var(--space-md);
+    box-shadow: var(--shadow-md);
   }
-  
+
+  .nav--open .nav-links {
+    display: flex;
+  }
+
+  .nav--open .nav-link,
+  .nav--open.nav--scrolled .nav-link {
+    color: var(--color-text);
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav--open .nav-link::after {
+    width: 28px;
+  }
+
+  .nav--open .nav-cta {
+    margin-top: var(--space-sm);
+    text-align: center;
+  }
+
   .nav-toggle {
     display: flex;
+    background: none;
+    border: 0;
   }
   
   .hero-bar-inner {
