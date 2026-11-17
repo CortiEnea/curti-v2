@@ -14,11 +14,7 @@
       <div class="nav-container">
         <a href="{{ url_for('site.home') }}" class="nav-brand">
           <div class="nav-logo">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ company.name }}" />
-          </div>
-          <div class="nav-brand-text">
-            <span class="nav-brand-name">{{ company.name }}</span>
-            <span class="nav-brand-tag">Dal 1974</span>
+            <img src="{{ url_for('static', filename='images/logo-lockup.png') }}" alt="{{ company.name }}" />
           </div>
         </a>
 
@@ -47,7 +43,9 @@
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <div class="footer-brand-name">{{ company.name }}</div>
+            <div class="footer-logo">
+              <img src="{{ url_for('static', filename='images/logo-lockup.png') }}" alt="{{ company.name }}" />
+            </div>
             <div class="footer-brand-tag">{{ company.tagline }}</div>
             <p>Dal 1974, falegnameria di famiglia in Ticino. Qualità artigianale, metodo contemporaneo.</p>
           </div>

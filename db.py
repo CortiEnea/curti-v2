@@ -182,9 +182,11 @@ def seed_defaults():
     with get_db() as conn:
         count = conn.execute("SELECT COUNT(*) as c FROM projects").fetchone()["c"]
         if count == 0:
-            image_keys = ["cucina", "portoncino", "armadio"]
+            image_keys = ["ligornetto", "cucina", "portoncino", "armadio"]
             for i, p in enumerate(PROJECTS):
                 img = IMAGES["projects"].get(image_keys[i], "") if i < len(image_keys) else ""
+                if img and not img.startswith("/") and not img.startswith("http"):
+                    img = f"/static/{img}"
                 imgs = [img] if img else []
                 conn.execute(
                     "INSERT INTO projects (title, location, goal, solution, materials, images) VALUES (?, ?, ?, ?, ?, ?)",

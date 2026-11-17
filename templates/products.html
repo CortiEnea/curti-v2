@@ -13,8 +13,8 @@
       Prodotti su misura
     </h1>
     <p class="section-subtitle" style="max-width: 600px;">
-      Ogni prodotto è configurabile su specifica. Materiali, finiture e ferramenta 
-      scelti insieme per rispondere alle esigenze di ogni progetto.
+      Gelosie, portoncini, porte interne e serramenti su specifica.
+      Posa e assistenza restano interne.
     </p>
   </div>
 </section>
@@ -53,20 +53,14 @@
           <span class="section-kicker-text">Certificazione</span>
         </div>
         <h2 class="font-display" style="font-size: 2rem; margin-bottom: 1.5rem;">Membro USFA</h2>
-        <p class="story-text">
-          Fernando Curti SA è membro dell'Unione Svizzera dei Fabbricanti di Finestre, Facciate e Porte (USFA). 
-          Questo garantisce standard qualitativi elevati e accesso a prodotti certificati.
-        </p>
-        <p class="story-text">
-          La certificazione USFA significa processi controllati, materiali tracciabili e 
-          prestazioni garantite per ogni prodotto.
-        </p>
-        <a href="https://www.usfa.ch/it/prodotti" target="_blank" class="btn btn-outline mt-2">
+        <p class="story-text">{{ usfa.intro }}</p>
+        <p class="story-text">{{ usfa.renovation }}</p>
+        <a href="{{ usfa.products_url }}" target="_blank" class="btn btn-outline mt-2">
           Scopri i prodotti USFA
         </a>
       </div>
-      <div class="story-image">
-        <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&q=80" alt="Finestre in legno" />
+      <div class="story-image story-image--logo">
+        <img src="{{ url_for('static', filename='images/curti-usfa.png') }}" alt="Logo USFA" />
       </div>
     </div>
   </div>

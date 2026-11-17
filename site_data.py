@@ -38,8 +38,20 @@ class RealEstateListing:
 
 
 USFA = {
-    # Source: https://www.usfa.ch/it/prodotti
     "products_url": "https://www.usfa.ch/it/prodotti",
+    "intro": (
+        "Per rimanere al passo con i tempi, l’azienda ha cercato fornitori in grado di soddisfare "
+        "le molteplici richieste di una clientela sempre più esigente. Una ricerca che ha portato "
+        "alla collaborazione con la cooperativa USFA di Cadenazzo: un unico partner per la "
+        "commercializzazione di una variegata gamma di prodotti di qualità, con cui lavoriamo dal 1992."
+    ),
+    "renovation": (
+        "Tra le sfide di oggi, a farla da padrone è il risanamento degli edifici. Il panorama "
+        "immobiliare svizzero è composto da molti edifici con un’importante vetustà tecnica e una "
+        "scarsa qualità energetica. Per questo la Fernando Curti SA cerca soluzioni che rendano "
+        "l’intervento di sostituzione di serramenti e porte il meno invasivo possibile, riducendo "
+        "il dispendio energetico e migliorando qualità di vita ed economicità per il committente."
+    ),
 }
 
 
@@ -60,33 +72,57 @@ COMPANY = {
 
 
 ABOUT = {
-    # Source: https://fernandocurti.ch/
-    "title": "Una falegnameria di famiglia, un metodo contemporaneo.",
+    "title": "Passione e professionalità: la storia della Fernando Curti SA.",
     "story": (
-        "Nel 1974 Fernando Curti avvia la sua attività di falegname, curando ogni fase della lavorazione di porte, armadi, finestre e cucine. "
-        "L’attuale officina in Via Mastri Ligornettesi viene costruita pochi anni dopo e nel 1988 nasce la Fernando Curti SA. "
-        "Nel tempo l’azienda cresce rimanendo a conduzione famigliare, oggi portata avanti dalle figlie di Fernando: Paola e Valentina."
+        "Nel 1974 Fernando Curti inizia la sua attività di falegname. Nella bottega ricavata al pianterreno "
+        "della casa del papà Aldo curava ogni fase della lavorazione di porte, armadi, finestre e cucine. "
+        "L’attuale officina in via Mastri Ligornettesi venne costruita solo qualche anno dopo e nel 1988 "
+        "nacque la Fernando Curti SA. Una società che nel tempo è cresciuta, rimanendo però sempre a "
+        "conduzione famigliare. Una conduzione la cui continuità è assicurata oggi dalle figlie di Fernando: "
+        "Paola e Valentina."
     ),
     "mission": (
-        "Un unico interlocutore affidabile per un servizio completo: supporto in progettazione, produzione, posa, assistenza post‑vendita e — quando necessario — "
-        "supporto per pratiche burocratiche."
+        "Gli anni di esperienza nel settore hanno portato la Fernando Curti SA a essere un punto di riferimento "
+        "per gli studi d’architettura e le imprese di costruzione, che sanno di poter contare su un unico "
+        "interlocutore affidabile per un servizio completo: dalla fase di progettazione alla messa in opera "
+        "dei manufatti, fino al dopo vendita e alle pratiche burocratiche, come ad esempio l’eventuale "
+        "richiesta di sussidi."
+    ),
+    "quality": (
+        "Per garantire l’alta qualità della consulenza tecnica, dei lavori di posa e dell’assistenza post vendita "
+        "la Fernando Curti SA può contare su personale serio e qualificato, in grado di soddisfare al meglio "
+        "il desiderio di ogni cliente, senza dover fare capo a collaboratori esterni. Questo permette di offrire "
+        "un servizio puntuale e su misura, che si tratti di grandi forniture per complessi residenziali o di una "
+        "singola anta del piccolo cliente."
     ),
     "pillars": [
         {
-            "title": "Progetto e misure",
-            "text": "Rilievi accurati, consulenza tecnica e scelte guidate: dal dettaglio di ferramenta alla stratigrafia.",
+            "title": "Posa in opera",
+            "text": (
+                "La messa in opera di tutti i prodotti trattati è effettuata da collaboratori interni: "
+                "non affidiamo mai il montaggio in maniera esclusiva a squadre esterne."
+            ),
         },
         {
-            "title": "Materiali e finiture",
-            "text": "Essenza, verniciatura, trattamenti e manutenzione: estetica e durata devono convivere.",
+            "title": "Conoscenza del prodotto",
+            "text": (
+                "Installatori che conoscono a fondo ciò che posano, senza le sorprese tipiche del subappalto: "
+                "smaltimenti, pulizie e trasporto a piè d’opera restano sotto il nostro controllo."
+            ),
         },
         {
-            "title": "Produzione e posa",
-            "text": "Organizzazione chiara: produzione in officina, posa pulita e regolazioni finali su cantiere.",
+            "title": "Supporto tecnico",
+            "text": (
+                "Oltre a consigliare il cliente in fase di scelta, forniamo i particolari costruttivi per i "
+                "progetti esecutivi e collaboriamo alla realizzazione dei dettagli specifici."
+            ),
         },
         {
-            "title": "Assistenza",
-            "text": "Post‑vendita e interventi: un riferimento unico anche dopo la consegna.",
+            "title": "Post vendita",
+            "text": (
+                "Un servizio post vendita puntuale e preciso, con la stessa attenzione che riserviamo "
+                "alla posa in cantiere."
+            ),
         },
     ],
     "people": [
@@ -105,79 +141,145 @@ ABOUT = {
 
 
 SERVICES: list[dict] = [
-    # Source: https://fernandocurti.ch/ (Cosa facciamo)
     {
-        "title": "Porte interne e portoncini",
-        "intro": "Porte su misura con dettagli curati e posa pulita.",
-        "bullets": ["Su misura", "Ferramenta e dettagli tecnici", "Posa e assistenza post‑vendita"],
+        "title": "Gelosie",
+        "intro": (
+            "Che siano intese come protezioni solari o come primo elemento per la sicurezza dell’abitazione, "
+            "disponiamo di un’ampia gamma di gelosie, dalle tradizionali in legno alle più moderne in alluminio."
+        ),
+        "bullets": [
+            "Lamelle fisse, orientabili o a doppia spiovenza",
+            "Scuretti dogati o bungati",
+            "Adattabili ai cardini esistenti, senza ponteggi",
+        ],
     },
     {
-        "title": "Serramenti e gelosie",
-        "intro": "Sistemi in legno con focus su risanamento e interventi energetici.",
-        "bullets": ["Risanamento energetico", "Riduzione dispersioni", "Interventi il meno invasivi possibile"],
+        "title": "Portoncini d’ingresso",
+        "intro": (
+            "Concepito come porta di sicurezza ma non solo, il portoncino d’ingresso deve caratterizzare "
+            "un’abitazione, sia esso in legno o in alluminio."
+        ),
+        "bullets": [
+            "Personalizzazione estetica su catalogo",
+            "Sicurezza statica e anti-effrazione",
+            "Coibentazione senza compromessi",
+        ],
     },
     {
-        "title": "Cucine",
-        "intro": "Cucine su misura progettate sullo spazio reale e sull’uso quotidiano.",
-        "bullets": ["Progettazione e rilievi", "Materiali e finiture", "Produzione e posa"],
-    },
-    {
-        "title": "Armadi e mobili su misura",
-        "intro": "Armadi, contenitori e arredi su misura per privati e professionisti.",
-        "bullets": ["Per nicchie e fuori squadro", "Accessori e allestimenti interni", "Durabilità e manutenzione semplice"],
+        "title": "Porte interne",
+        "intro": (
+            "Proponiamo una vasta gamma di porte interne: dalle pratiche e robuste porte in laminato "
+            "alle classiche porte impiallacciate in essenza o laccate."
+        ),
+        "bullets": [
+            "Semipesanti con anima in truciolare",
+            "Stipiti in legno o in metallo",
+            "Porte tecniche EI30 VKF e sicurezza EN 1627",
+        ],
     },
 ]
 
 
-# Categories inspired by USFA product families (without inventing numeric performance values)
-# Source: https://www.usfa.ch/it/prodotti
 PRODUCTS: list[ProductCategory] = [
     ProductCategory(
-        slug="windows",
-        title="Finestre (legno)",
-        short="Finestre in legno con posa curata: comfort, prestazioni e dettaglio costruttivo.",
-        highlights=["Configurazione su progetto", "Vetri e guarnizioni su specifica", "Posa e sigillature curate"],
-        usfa_summary="Famiglia prodotto certificabile con configurazione su specifica (materiali, vetri, ferramenta).",
-        usfa_bullets=["Profili e materiali su progetto", "Vetraggi e guarnizioni su specifica", "Posa e regolazioni"],
-    ),
-    ProductCategory(
         slug="shutters",
-        title="Gelosie / persiane",
-        short="Elementi esterni in legno per protezione e identità architettonica.",
-        highlights=["Geometrie su misura", "Trattamenti protettivi", "Manutenzione e ripristini"],
+        title="Gelosie",
+        short=(
+            "Che siano intese come protezioni solari o come primo elemento per la sicurezza dell’abitazione, "
+            "disponiamo di un’ampia gamma di gelosie, dalle tradizionali in legno alle più moderne in alluminio."
+        ),
+        highlights=[
+            "Lamelle fisse, orientabili, a doppia spiovenza",
+            "Scuretti dogati o bungati",
+            "Meccanismi di chiusura e adattamento ai cardini esistenti, senza ponteggi",
+        ],
     ),
     ProductCategory(
         slug="entrance-doors",
-        title="Portoncini d’entrata",
-        short="Ingressi su misura con dettagli tecnici curati.",
-        highlights=["Ferramenta e chiusure", "Soglie e battute", "Posa accurata"],
-        usfa_summary="Portoncini configurabili (sicurezza, isolamento, finiture) con posa coordinata.",
-        usfa_bullets=["Pannelli e strutture su specifica", "Soglie e ferramenta su progetto", "Assistenza e manutenzione"],
+        title="Portoncini d’ingresso",
+        short=(
+            "Concepito come porta di sicurezza ma non solo, il portoncino d’ingresso deve caratterizzare "
+            "un’abitazione, sia esso in legno o in alluminio."
+        ),
+        highlights=[
+            "Personalizzazione estetica dei modelli a catalogo",
+            "Criteri di sicurezza statica e contro l’effrazione",
+            "Proprietà di coibentazione mantenute",
+        ],
+        usfa_summary="Collaborazione con produttori flessibili per configurare il portoncino nel rispetto di sicurezza e isolamento.",
+        usfa_bullets=["Legno o alluminio", "Configurazione su catalogo", "Posa e post vendita interni"],
     ),
     ProductCategory(
         slug="interior-doors",
         title="Porte interne",
-        short="Porte interne con linee pulite, chiusure precise e finiture durevoli.",
-        highlights=["A battente o scorrevoli", "Finiture coordinate", "Posa e messa a punto"],
-        usfa_summary="Famiglia porte interne su misura (tipologie, finiture e accessori).",
-        usfa_bullets=["Tipologia e apertura su specifica", "Maniglie e finiture", "Posa e regolazioni finali"],
+        short=(
+            "Proponiamo una vasta gamma di porte interne: dalle pratiche e robuste porte in laminato "
+            "alle classiche porte impiallacciate in essenza o laccate."
+        ),
+        highlights=[
+            "Semipesanti con anima interna in truciolare",
+            "Stipiti in legno o in metallo, finiture e accessori a scelta",
+            "Porte tecniche anticendio EI30 VKF e di sicurezza (EN 1627)",
+        ],
+        usfa_summary="A disposizione in pronta consegna anche porte laccate bianco dal circuito USFA.",
+        usfa_bullets=["Laminato, essenza, laccato", "Porte tecniche certificate", "Pronta consegna laccato bianco"],
     ),
     ProductCategory(
-        slug="wardrobes",
-        title="Armadi su misura",
-        short="Spazi ottimizzati e fruibilità reale: composizioni su misura per nicchie e pareti attrezzate.",
-        highlights=["Interni modulari", "Accessori su richiesta", "Ante battenti o scorrevoli"],
+        slug="windows",
+        title="Serramenti e risanamento",
+        short=(
+            "Oltre alla tradizionale sostituzione dei serramenti in legno con elementi di nuova generazione, "
+            "è possibile trasformare lo stato di fatto senza drastici interventi edili, migliorando isolamento, "
+            "estetica e sicurezza."
+        ),
+        highlights=[
+            "Interventi il meno invasivi possibile",
+            "Pannello superiore coibentato al posto del cassonetto poco isolante",
+            "Lamella a pacco con guide incassate: estetica e sicurezza",
+        ],
+        usfa_summary="Soluzioni USFA per il risanamento energetico di edifici esistenti.",
+        usfa_bullets=["Sostituzione serramenti", "Riduzione dispersioni", "Sistemi anti-effrazione"],
     ),
     ProductCategory(
-        slug="usfa-stock",
-        title="Prodotti a stock (USFA)",
-        short="Prodotti a stock e disponibilità veloce dal circuito USFA (quando possibile).",
-        highlights=["Disponibilità variabile", "Soluzioni pronte", "Supporto scelta e posa"],
+        slug="installation",
+        title="Posa in opera",
+        short=(
+            "Quello che ci differenzia è che la messa in opera di tutti i prodotti trattati è effettuata "
+            "da collaboratori interni: non affidiamo mai il montaggio in maniera esclusiva a squadre esterne."
+        ),
+        highlights=[
+            "Piena conoscenza dei prodotti da parte degli installatori",
+            "Niente sorprese da subappalto (smaltimenti, pulizie, trasporto a piè d’opera)",
+            "Sistemi di fissaggio in linea con la normativa termica, fonica e di tenuta",
+        ],
+    ),
+    ProductCategory(
+        slug="technical-support",
+        title="Supporto tecnico",
+        short=(
+            "Oltre a seguire e consigliare il cliente in fase di scelta, offriamo un supporto tecnico completo "
+            "sia ai progettisti che al cliente privato."
+        ),
+        highlights=[
+            "Particolari costruttivi per i progetti esecutivi",
+            "Collaborazione sui dettagli specifici",
+            "Consulenza su porte omologate in legno e in metallo, anche anti-incendio",
+        ],
     ),
 ]
 
 
 PROJECTS: list[ProjectItem] = [
+    ProjectItem(
+        title="Finestra su misura a Ligornetto",
+        location="Ligornetto",
+        goal="Integrare una finestra particolare nello spessore del muro, con davanzale in legno e un sopraluce di geometria irregolare.",
+        solution=(
+            "Serramento in legno con inferriata, nicchia e davanzale a tutta profondità; "
+            "sopraluce trapezoidale verso il tetto per portare luce nella zona giorno senza appesantire la parete."
+        ),
+        materials="Legno, vetro, ferramenta e inferriata su misura.",
+    ),
     ProjectItem(
         title="Cucina su misura con isola e boiserie",
         location="Lugano",
@@ -285,18 +387,20 @@ REAL_ESTATE: list[RealEstateListing] = [
 ]
 
 
-# Immagini “come prima” (Unsplash) per hero/servizi/progetti
 IMAGES = {
-    "hero": "https://images.unsplash.com/photo-1505798577917-a65157d3320a?auto=format&fit=crop&w=2400&q=80",
-    "services": {
-        "arredi": "https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?auto=format&fit=crop&w=1600&q=80",
-        "serramenti": "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1600&q=80",
-        "porte": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
-    },
+    "logo": "images/logo-lockup.png",
+    "workshop": "images/hero-custom.png",
+    "ligornetto": "images/ligornetto-finestra.jpg",
+    "hero": [
+        "images/ligornetto-finestra.jpg",
+        "images/hero-custom.png",
+        "images/logo-lockup.png",
+    ],
     "projects": {
-        "cucina": "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=1600&q=80",
-        "portoncino": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80",
-        "armadio": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80",
+        "ligornetto": "images/ligornetto-finestra.jpg",
+        "cucina": "images/hero-custom.png",
+        "portoncino": "images/logo-lockup.png",
+        "armadio": "images/hero-custom.png",
     },
 }
 

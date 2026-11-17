@@ -5,43 +5,42 @@
 {# ─── HERO ────────────────────────────────────────────────────────────────── #}
 <section class="hero">
   <div class="hero-bg">
-    <img src="{{ images.hero }}" alt="Falegnameria Fernando Curti" />
+    <img src="{{ url_for('static', filename=images.ligornetto) }}" alt="Finestra su misura a Ligornetto" />
   </div>
   <div class="hero-overlay"></div>
-  
+
   <div class="hero-content">
     <div class="hero-kicker">
       <span class="hero-kicker-line"></span>
       <span class="hero-kicker-text">Falegnameria dal 1974</span>
     </div>
-    
-    <h1 class="hero-title font-display">Artigianato che diventa architettura</h1>
-    
+
+    <h1 class="hero-title font-display">Passione e professionalità, dal 1974</h1>
+
     <p class="hero-subtitle">
-      Porte, serramenti, cucine e mobili su misura. Da tre generazioni, 
-      trasformiamo il legno in soluzioni che durano nel tempo.
+      Un unico interlocutore dalla progettazione alla posa: serramenti, gelosie,
+      portoncini e porte interne, con personale interno e post vendita puntuale.
     </p>
-    
+
     <div class="hero-actions">
       <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Richiedi preventivo</a>
       <a href="{{ url_for('site.projects') }}" class="btn btn-outline">Scopri i progetti</a>
     </div>
-    
   </div>
-  
+
   <div class="hero-bar">
     <div class="hero-bar-inner">
       <div class="hero-stat">
-        <span class="hero-stat-value">50<span class="hero-stat-plus">+</span></span>
-        <span class="hero-stat-label">anni di esperienza</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-value">100<span class="hero-stat-plus">%</span></span>
-        <span class="hero-stat-label">made in Ticino</span>
+        <span class="hero-stat-value">1974</span>
+        <span class="hero-stat-label">fondazione</span>
       </div>
       <div class="hero-stat">
         <span class="hero-stat-value">USFA</span>
-        <span class="hero-stat-label">partner ufficiale</span>
+        <span class="hero-stat-label">partner dal 1992</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">100<span class="hero-stat-plus">%</span></span>
+        <span class="hero-stat-label">posa interna</span>
       </div>
     </div>
   </div>
@@ -57,23 +56,14 @@
       </div>
       <h2 class="section-title font-display">Soluzioni su misura</h2>
       <p class="section-subtitle">
-        Ogni progetto nasce dall'ascolto. Progettiamo, produciamo e installiamo 
+        Ogni progetto nasce dall’ascolto. Progettiamo, produciamo e installiamo
         con un unico interlocutore affidabile.
       </p>
     </div>
-    
-    {% set service_images = [
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80'
-    ] %}
+
     <div class="grid-3">
       {% for service in services %}
-      <div class="service-card service-card--with-image">
-        <div class="service-image">
-          <img src="{{ service_images[loop.index0] }}" alt="{{ service.title }}" />
-        </div>
+      <div class="service-card">
         <div class="service-content">
           <h3 class="service-title">{{ service.title }}</h3>
           <p class="service-text">{{ service.intro }}</p>
@@ -86,7 +76,7 @@
       </div>
       {% endfor %}
     </div>
-    
+
     <div class="text-center mt-4">
       <a href="{{ url_for('site.products') }}" class="btn btn-outline">Tutti i prodotti</a>
     </div>
@@ -103,11 +93,11 @@
       </div>
       <h2 class="section-title font-display">Progetti recenti</h2>
       <p class="section-subtitle">
-        Ogni realizzazione racconta una storia di collaborazione tra 
+        Ogni realizzazione racconta una storia di collaborazione tra
         committente, progettista e artigiano.
       </p>
     </div>
-    
+
     <div class="grid-3">
       {% for project in projects %}
       <div class="card">
@@ -124,7 +114,7 @@
       </div>
       {% endfor %}
     </div>
-    
+
     <div class="text-center mt-4">
       <a href="{{ url_for('site.projects') }}" class="btn btn-outline">Vedi tutti i progetti</a>
     </div>
@@ -143,7 +133,7 @@
       Parliamo del tuo progetto
     </h2>
     <p class="section-subtitle" style="margin: 0 auto 2rem; text-align: center;">
-      Preventivo chiaro, tempi condivisi, posa pulita. Contattaci per una consulenza gratuita.
+      Preventivo chiaro, tempi condivisi, posa pulita. Contattaci per una consulenza.
     </p>
     <a href="{{ url_for('site.contact') }}" class="btn btn-primary">Contattaci ora</a>
   </div>
