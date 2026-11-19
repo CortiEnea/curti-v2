@@ -74,26 +74,19 @@ COMPANY = {
 ABOUT = {
     "title": "Passione e professionalità: la storia della Fernando Curti SA.",
     "story": (
-        "Nel 1974 Fernando Curti inizia la sua attività di falegname. Nella bottega ricavata al pianterreno "
-        "della casa del papà Aldo curava ogni fase della lavorazione di porte, armadi, finestre e cucine. "
-        "L’attuale officina in via Mastri Ligornettesi venne costruita solo qualche anno dopo e nel 1988 "
-        "nacque la Fernando Curti SA. Una società che nel tempo è cresciuta, rimanendo però sempre a "
-        "conduzione famigliare. Una conduzione la cui continuità è assicurata oggi dalle figlie di Fernando: "
-        "Paola e Valentina."
+        "Sono ormai trascorsi 44 anni da quel lontano 1974, quando Fernando Curti iniziò la sua attività di falegname. Nella bottega ricavata al pianterreno della casa del papà Aldo curava ogni fase della lavorazione di porte, armadi, finestre e cucine. L’attuale officina in via Mastri Ligornettesi venne costruita solo qualche anno dopo e nel 1988 nacque la Fernando Curti SA. Una società che nel tempo è cresciuta, rimanendo però sempre a conduzione famigliare. Una conduzione la cui continuità è assicurata oggi dalle figlie di Fernando: Paola e Valentina."
+        "Gli oltre trent’anni di esperienza nel settore hanno portato la Fernando Curti SA a essere un punto di riferimento per gli studi d’architettura e le imprese di costruzione, che sanno di poter contare su un unico interlocutore affidabile per un servizio completo, che li supporta dalla fase di progettazione alla messa in opera dei manufatti, fino al dopo vendita e alle pratiche burocratiche, come ad esempio l’eventuale richiesta di sussidi."
+        "Per garantire l’alta qualità della consulenza tecnica, dei lavori di posa e dell’assistenza post vendita la Fernando Curti SA può contare su personale serio e qualificato, in grado di soddisfare al meglio il desiderio di ogni cliente, senza dover fare capo a collaboratori esterni. Questo permette di offrire un servizio puntuale e su misura molto apprezzato dalla clientela, la cui soddisfazione è da decenni il miglior biglietto da visita, che si tratti di grandi forniture per complessi residenziali o di una singola anta del piccolo cliente."
     ),
     "mission": (
-        "Gli anni di esperienza nel settore hanno portato la Fernando Curti SA a essere un punto di riferimento "
-        "per gli studi d’architettura e le imprese di costruzione, che sanno di poter contare su un unico "
-        "interlocutore affidabile per un servizio completo: dalla fase di progettazione alla messa in opera "
-        "dei manufatti, fino al dopo vendita e alle pratiche burocratiche, come ad esempio l’eventuale "
-        "richiesta di sussidi."
+        "Per rimanere al passo con i tempi, l’azienda ha cercato dei fornitori che potessero permettergli di soddisfare le molteplici richieste di una clientela sempre più esigente. Una ricerca che ha portato alla collaborazione con la cooperativa USFA di Cadenazzo: un unico partner per la commercializzazione di una variegata gamma di prodotti di qualità, con cui lavora dal 1992."
+        "Molti prodotti diversi per far fronte alle molte sfide del mercato. Tra queste a farla da padrone oggi è il risanamento degli edifici. Il panorama immobiliare svizzero è composto da molti edifici caratterizzati da un’importante vetustà tecnica e una scarsa qualità energetica, per questi motivi la Fernando Curti SA è alla continua ricerca di soluzioni per rendere meno invasivo possibile l’intervento di sostituzione di serramenti e porte nelle abitazioni e per permettere la massima riduzione del dispendio energetico, con un conseguente maggior beneficio in termini di qualità di vita ed economicità per il committente." 
+        "Oltre alla tradizionale sostituzione dei serramenti in legno con elementi di nuova generazione, senza drastici interventi edili è oggi possibile trasformare radicalmente lo stato di fatto, ad esempio sostituendo una poco isolante finestra con tapparella avvolgibile e cassonetto con una di nuova concezione, dotata di pannello superiore coibentato che migliora decisamente il grado di isolamento termico. Inoltre inserendo una più moderna lamella a pacco con guide incassate ne guadagnano pure sia l’estetica della costruzione sia la sua sicurezza."
+
     ),
     "quality": (
-        "Per garantire l’alta qualità della consulenza tecnica, dei lavori di posa e dell’assistenza post vendita "
-        "la Fernando Curti SA può contare su personale serio e qualificato, in grado di soddisfare al meglio "
-        "il desiderio di ogni cliente, senza dover fare capo a collaboratori esterni. Questo permette di offrire "
-        "un servizio puntuale e su misura, che si tratti di grandi forniture per complessi residenziali o di una "
-        "singola anta del piccolo cliente."
+        "Un punto quest’ultimo che è un’altra delle sfide recenti che vale la pena citare: la ricerca di soluzioni anti effrazione per una clientela che richiede sistemi di sicurezza sempre più evoluti. Sicurezza per quanto riguarda le intrusioni, ma pure per quanto attiene alle misure anti incendio, a questo proposito la collaborazione con professionisti del settore ci permette di garantire una consulenza corretta al cliente nella scelta di porte omologate sia in legno, sia in metallo. "
+        "Molte sfide diverse, che la Fernando Curti SA affronta ogni giorno forte dell’esperienza e la competenza maturate in oltre trent’anni di attività, con la stessa passione che animava la bottega sotto casa del nonno Aldo."
     ),
     "pillars": [
         {
@@ -129,12 +122,10 @@ ABOUT = {
         {
             "name": "Paola Curti",
             "role": "Direzione",
-            "note": "Coordinamento, relazione con il cliente e gestione delle fasi progettuali.",
         },
         {
             "name": "Valentina Curti",
             "role": "Direzione",
-            "note": "Gestione operativa, pianificazione e qualità del processo fino alla posa.",
         },
     ],
 }
